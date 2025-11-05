@@ -21,7 +21,13 @@ This repository contains projects and resources managed by the A6-9V organizatio
 │   ├── Google Apps Scripts
 │   ├── Python setup files
 │   ├── API development docs
-│   └── Project scripts
+│   ├── Project scripts
+│   └── AdvancedTools/         # 🆕 Advanced development utilities
+│       ├── Live trading systems
+│       ├── MT5 integration tools
+│       ├── Google Cloud management
+│       ├── Project automation scripts
+│       └── Development configurations
 ├── Security-Credentials/      # Protected credentials and certificates
 │   ├── SSL/TLS certificates (.pem files)
 │   ├── Google Cloud credentials (.json)
@@ -35,8 +41,16 @@ This repository contains projects and resources managed by the A6-9V organizatio
 ├── System-Tools/             # System utilities and logs
 │   ├── Batch scripts for automation
 │   ├── Log files
-│   └── Planning documents
+│   ├── Planning documents
+│   └── WorkspaceManagement/   # 🆕 Advanced workspace automation
+│       ├── Device connection management
+│       ├── Drive synchronization tools
+│       ├── Trading system deployment
+│       ├── Remote workspace setup
+│       └── Web dashboard interface
 └── README.md                 # This file
+├── UNIFIED_WORKSPACE.code-workspace # 🆕 VS Code unified workspace
+└── WORKSPACE_MERGE_COMPLETE.md      # 🆕 Merge documentation
 ```
 
 ## 🔒 Security
