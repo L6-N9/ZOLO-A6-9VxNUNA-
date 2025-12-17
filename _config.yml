@@ -1,0 +1,60 @@
+# GitHub Pages Configuration
+# ZOLO-A6-9VxNUNA Website
+
+# Site settings
+title: ZOLO-A6-9VxNUNA
+description: AI-Powered Trading System & Complete Device Automation Platform for Windows 11
+url: https://mouy-leng.github.io
+baseurl: /ZOLO-A6-9VxNUNA-
+
+# Author
+author:
+  name: A6-9V Organization
+  email: Lengkundee01@gmail.com
+  github: Mouy-leng
+
+# Theme (optional - using custom CSS)
+# theme: minima
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
+# Exclude from build
+exclude:
+  - README.md
+  - LICENSE
+  - CNAME
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+
+# Include in build
+include:
+  - _config.yml
+
+# Plugins
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# SEO
+twitter:
+  card: summary_large_image
+  
+social:
+  name: A6-9V Organization
+  links:
+    - https://github.com/Mouy-leng
+    - https://github.com/A6-9V
+    - https://orcid.org/0009-0009-3473-2131
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+      image: /assets/og-image.png
+

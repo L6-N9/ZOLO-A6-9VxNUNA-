@@ -1,0 +1,52 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Build outputs
+dist/
+build/
+*.min.css
+*.min.js
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# Secrets and credentials
+.env
+.env.local
+*.pem
+*.key
+credentials/
+secrets/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Backup files
+*.bak
+*.backup
+
+# Screenshots
+screenshots/
+*.png
+!assets/*.png
+!assets/og-image.png
+
+# Personal data
+*.csv
+*.xlsx
+
