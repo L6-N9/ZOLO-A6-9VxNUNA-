@@ -39,6 +39,8 @@ documents/
 git-credentials.txt
 .github-token
 mql5-config.txt
+vps-config.txt
+*vps-config*
 
 # Sensitive credentials and keys (from my-drive-projects)
 *.pem
