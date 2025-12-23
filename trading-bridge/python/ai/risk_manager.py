@@ -69,7 +69,12 @@ class AIRiskManager:
             lot_size = self._calculate_position_size(symbol, action, confidence, risk_score, account_balance)
             
             # Calculate stop loss and take profit
-            stop_loss, take_profit = self._calculate_stop_loss_take_profit(symbol, action, confidence)
+            result = self._calculate_stop_loss_take_profit(symbol, action, confidence)
+            if len(result) == 3:
+                stop_loss, take_profit, risk_reward_ratio = result
+            else:
+                stop_loss, take_profit = result
+                risk_reward_ratio = 2.5  # Default R:R ratio
             
             # Check portfolio risk
             portfolio_risk = self._check_portfolio_risk(symbol, lot_size)
@@ -85,8 +90,9 @@ class AIRiskManager:
                 'max_risk': self.max_risk_per_trade,
                 'stop_loss': stop_loss,
                 'take_profit': take_profit,
+                'risk_reward_ratio': risk_reward_ratio if 'risk_reward_ratio' in locals() else 2.5,
                 'portfolio_risk': portfolio_risk,
-                'risk_reasoning': f'Risk assessment: score={risk_score:.2f}, confidence={confidence:.2f}',
+                'risk_reasoning': f'Risk assessment: score={risk_score:.2f}, confidence={confidence:.2f}, R:R={risk_reward_ratio if "risk_reward_ratio" in locals() else 2.5:.1f}',
                 'approved': risk_score <= 0.7 and confidence >= self.min_confidence
             }
             
@@ -179,28 +185,27 @@ class AIRiskManager:
             confidence: Signal confidence
             
         Returns:
-            Tuple of (stop_loss, take_profit) prices
+            Tuple of (stop_loss, take_profit, risk_reward_ratio)
+            Note: stop_loss and take_profit are None - they should be calculated
+            at execution time based on entry price. risk_reward_ratio is provided
+            for the EA to calculate TP from SL.
         """
-        # TODO: Implement actual stop loss/take profit calculation
-        # This should consider:
-        # - Support/resistance levels
-        # - ATR (Average True Range) for volatility
-        # - Risk/reward ratio
-        # - Symbol-specific characteristics
-        
-        # Placeholder implementation
-        stop_loss = None
-        take_profit = None
-        
-        # Higher confidence = tighter stop loss, wider take profit
-        if confidence > 0.7:
-            # Tight stop, wide target
-            pass
+        # Default risk/reward ratios based on confidence
+        # Higher confidence = better risk/reward ratio
+        if confidence > 0.8:
+            risk_reward_ratio = 3.0  # 1:3 ratio
+        elif confidence > 0.6:
+            risk_reward_ratio = 2.5  # 1:2.5 ratio
         else:
-            # Wider stop, moderate target
-            pass
+            risk_reward_ratio = 2.0  # 1:2 ratio
         
-        return stop_loss, take_profit
+        # Return None for SL/TP prices - they will be calculated at execution time
+        # The risk_reward_ratio will be used by the EA to calculate TP from SL
+        # This is because we need the entry price to calculate absolute SL/TP prices
+        stop_loss = None  # Will be calculated at execution time based on entry price
+        take_profit = None  # Will be calculated at execution time: TP = Entry ± (SL_distance * R:R)
+        
+        return stop_loss, take_profit, risk_reward_ratio
     
     def _check_portfolio_risk(self, symbol: str, lot_size: float) -> float:
         """
@@ -282,6 +287,7 @@ class AIRiskManager:
             'risk_percentage': (total_risk / self.max_portfolio_risk * 100) if self.max_portfolio_risk > 0 else 0,
             'positions': list(self.active_positions.keys())
         }
+
 
 
 
