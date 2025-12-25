@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
     Complete Trading System Setup and Start
@@ -73,23 +73,20 @@ Write-Host "[2/6] Installing Python dependencies..." -ForegroundColor Yellow
 if (Test-Path $requirementsPath) {
     try {
         Write-Host "    Installing from requirements.txt..." -ForegroundColor Cyan
-        $installOutput = python -m pip install -q -r $requirementsPath 2>&1
+        $installOutput = pip install -q -r $requirementsPath 2>&1
         if ($LASTEXITCODE -eq 0) {
             Write-Host "    [OK] Dependencies installed successfully" -ForegroundColor Green
-        }
-        else {
+        } else {
             Write-Host "    [WARNING] Some dependencies may have failed to install" -ForegroundColor Yellow
             Write-Host "    Continuing anyway..." -ForegroundColor Cyan
         }
-    }
-    catch {
+    } catch {
         Write-Host "    [WARNING] Dependency installation had issues: $_" -ForegroundColor Yellow
         Write-Host "    Installing core dependencies..." -ForegroundColor Cyan
-        python -m pip install -q pyzmq requests python-dotenv cryptography schedule pywin32 2>&1 | Out-Null
+        pip install -q pyzmq requests python-dotenv cryptography schedule pywin32 2>&1 | Out-Null
         Write-Host "    [OK] Core dependencies installed" -ForegroundColor Green
     }
-}
-else {
+} else {
     Write-Host "    [INFO] requirements.txt not found, installing core dependencies..." -ForegroundColor Cyan
     pip install -q pyzmq requests python-dotenv cryptography schedule pywin32 2>&1 | Out-Null
     Write-Host "    [OK] Core dependencies installed" -ForegroundColor Green
@@ -113,71 +110,70 @@ if (-not (Test-Path $symbolsConfig)) {
     $defaultSymbols = @{
         symbols = @(
             @{
-                symbol        = "EURUSD"
-                broker        = "EXNESS"
-                enabled       = $true
-                trading_days  = @("monday", "tuesday", "wednesday", "thursday", "friday")
-                risk_percent  = 1.0
+                symbol = "EURUSD"
+                broker = "EXNESS"
+                enabled = $true
+                trading_days = @("monday", "tuesday", "wednesday", "thursday", "friday")
+                risk_percent = 1.0
                 max_positions = 1
-                min_lot_size  = 0.01
-                max_lot_size  = 10.0
+                min_lot_size = 0.01
+                max_lot_size = 10.0
             },
             @{
-                symbol        = "GBPUSD"
-                broker        = "EXNESS"
-                enabled       = $true
-                trading_days  = @("monday", "tuesday", "wednesday", "thursday", "friday")
-                risk_percent  = 1.0
+                symbol = "GBPUSD"
+                broker = "EXNESS"
+                enabled = $true
+                trading_days = @("monday", "tuesday", "wednesday", "thursday", "friday")
+                risk_percent = 1.0
                 max_positions = 1
-                min_lot_size  = 0.01
-                max_lot_size  = 10.0
+                min_lot_size = 0.01
+                max_lot_size = 10.0
             },
             @{
-                symbol        = "USDJPY"
-                broker        = "EXNESS"
-                enabled       = $true
-                trading_days  = @("monday", "tuesday", "wednesday", "thursday", "friday")
-                risk_percent  = 1.0
+                symbol = "USDJPY"
+                broker = "EXNESS"
+                enabled = $true
+                trading_days = @("monday", "tuesday", "wednesday", "thursday", "friday")
+                risk_percent = 1.0
                 max_positions = 1
-                min_lot_size  = 0.01
-                max_lot_size  = 10.0
+                min_lot_size = 0.01
+                max_lot_size = 10.0
             },
             @{
-                symbol        = "BTCUSD"
-                broker        = "EXNESS"
-                enabled       = $true
-                trading_days  = @("saturday", "sunday")
-                risk_percent  = 1.0
+                symbol = "BTCUSD"
+                broker = "EXNESS"
+                enabled = $true
+                trading_days = @("saturday", "sunday")
+                risk_percent = 1.0
                 max_positions = 1
-                min_lot_size  = 0.01
-                max_lot_size  = 10.0
+                min_lot_size = 0.01
+                max_lot_size = 10.0
             },
             @{
-                symbol        = "ETHUSD"
-                broker        = "EXNESS"
-                enabled       = $true
-                trading_days  = @("saturday", "sunday")
-                risk_percent  = 1.0
+                symbol = "ETHUSD"
+                broker = "EXNESS"
+                enabled = $true
+                trading_days = @("saturday", "sunday")
+                risk_percent = 1.0
                 max_positions = 1
-                min_lot_size  = 0.01
-                max_lot_size  = 10.0
+                min_lot_size = 0.01
+                max_lot_size = 10.0
             },
             @{
-                symbol        = "XAUUSD"
-                broker        = "EXNESS"
-                enabled       = $true
-                trading_days  = @("saturday", "sunday")
-                risk_percent  = 1.0
+                symbol = "XAUUSD"
+                broker = "EXNESS"
+                enabled = $true
+                trading_days = @("saturday", "sunday")
+                risk_percent = 1.0
                 max_positions = 1
-                min_lot_size  = 0.01
-                max_lot_size  = 10.0
+                min_lot_size = 0.01
+                max_lot_size = 10.0
             }
         )
     } | ConvertTo-Json -Depth 10
     $defaultSymbols | Out-File -FilePath $symbolsConfig -Encoding UTF8
     Write-Host "    [OK] Created default symbols.json" -ForegroundColor Green
-}
-else {
+} else {
     Write-Host "    [OK] symbols.json found" -ForegroundColor Green
 }
 
@@ -185,8 +181,7 @@ if (-not (Test-Path $brokersConfig)) {
     Write-Host "    [WARNING] brokers.json not found" -ForegroundColor Yellow
     Write-Host "    Broker API functionality will be limited" -ForegroundColor Cyan
     Write-Host "    Create brokers.json from brokers.json.example if needed" -ForegroundColor Cyan
-}
-else {
+} else {
     Write-Host "    [OK] brokers.json found" -ForegroundColor Green
 }
 
@@ -196,8 +191,7 @@ $existingProcesses = Get-Process python -ErrorAction SilentlyContinue | Where-Ob
     try {
         $cmdLine = (Get-CimInstance Win32_Process -Filter "ProcessId = $($_.Id)").CommandLine
         $cmdLine -like "*background_service*" -or $cmdLine -like "*run-trading-service*"
-    }
-    catch {
+    } catch {
         $false
     }
 }
@@ -212,9 +206,7 @@ if ($existingProcesses) {
     Write-Host "To stop: Stop-Process -Id $($existingProcesses[0].Id)" -ForegroundColor Cyan
     Write-Host ""
     Write-Host "Would you like to restart the service? (Y/N)" -ForegroundColor Yellow
-    # Auto-answer: Restart the service to ensure fresh start
-    $response = "Y"
-    Write-Host "Auto-selected: Y (restarting service)" -ForegroundColor Cyan
+    $response = Read-Host
     if ($response -ne "Y" -and $response -ne "y") {
         Write-Host "Keeping existing service running." -ForegroundColor Green
         exit 0
@@ -348,4 +340,5 @@ Write-Host "========================================" -ForegroundColor Cyan
 Write-Host "  Setup Complete - Trading System Running" -ForegroundColor Green
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host ""
+
 
