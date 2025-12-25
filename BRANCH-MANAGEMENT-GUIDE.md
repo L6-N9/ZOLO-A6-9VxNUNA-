@@ -191,7 +191,7 @@ git checkout main
 
 #### Manually Merge a PR via GitHub Web UI:
 
-1. Go to https://github.com/Mouy-leng/ZOLO-A6-9VxNUNA-/pulls
+1. Go to `https://github.com/<OWNER>/<REPO>/pulls` (replace with your repository)
 2. Click on the PR
 3. Click "Merge pull request"
 4. Confirm the merge

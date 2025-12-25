@@ -68,9 +68,16 @@ Write-ColorOutput "`nCurrent branch: $currentBranch" -Type Info
 Write-ColorOutput "`n[INFO] Fetching local branches..." -Type Info
 $allBranches = git branch --format='%(refname:short)|%(committerdate:iso8601)' | ForEach-Object {
     $parts = $_ -split '\|'
+    $dateValue = [DateTime]::Now
+    if ($parts.Count -gt 1) {
+        $parseSuccess = [DateTime]::TryParse($parts[1], [ref]$dateValue)
+        if (-not $parseSuccess) {
+            $dateValue = [DateTime]::Now
+        }
+    }
     [PSCustomObject]@{
         Name = $parts[0].Trim()
-        Date = if ($parts.Count -gt 1) { [DateTime]::Parse($parts[1]) } else { [DateTime]::Now }
+        Date = $dateValue
     }
 }
 
@@ -146,8 +153,13 @@ $failed = 0
 foreach ($branch in $branchesToDelete) {
     try {
         git branch -D $branch.Name 2>&1 | Out-Null
-        Write-ColorOutput "[OK] Deleted local branch: $($branch.Name)" -Type Success
-        $deleted++
+        if ($LASTEXITCODE -eq 0) {
+            Write-ColorOutput "[OK] Deleted local branch: $($branch.Name)" -Type Success
+            $deleted++
+        } else {
+            Write-ColorOutput "[ERROR] Failed to delete $($branch.Name)" -Type Error
+            $failed++
+        }
     }
     catch {
         Write-ColorOutput "[ERROR] Failed to delete $($branch.Name): $_" -Type Error
@@ -163,10 +175,15 @@ if ($IncludeRemote) {
         try {
             # Check if remote branch exists
             $remoteBranch = git ls-remote --heads origin $branch.Name 2>&1
-            if ($remoteBranch) {
+            if ($LASTEXITCODE -eq 0 -and $remoteBranch) {
                 git push origin --delete $branch.Name 2>&1 | Out-Null
-                Write-ColorOutput "[OK] Deleted remote branch: $($branch.Name)" -Type Success
-                $deleted++
+                if ($LASTEXITCODE -eq 0) {
+                    Write-ColorOutput "[OK] Deleted remote branch: $($branch.Name)" -Type Success
+                    $deleted++
+                } else {
+                    Write-ColorOutput "[ERROR] Failed to delete remote $($branch.Name)" -Type Error
+                    $failed++
+                }
             }
         }
         catch {

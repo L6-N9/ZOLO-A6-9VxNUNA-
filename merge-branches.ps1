@@ -77,7 +77,8 @@ if (-not $PRNumber) {
         
         foreach ($pr in $openPRs) {
             Write-ColorOutput "PR #$($pr.number): $($pr.title)" -Type Info
-            Write-ColorOutput "  Branch: $($pr.headRefName) | Author: $($pr.author.login)" -Type Info
+            $authorName = if ($pr.author -and $pr.author.login) { $pr.author.login } else { "[deleted user]" }
+            Write-ColorOutput "  Branch: $($pr.headRefName) | Author: $authorName" -Type Info
         }
         
         Write-ColorOutput "`nEnter PR number to merge (or 'q' to quit): " -Type Warning
@@ -104,7 +105,8 @@ try {
     Write-ColorOutput "`n=== PR Details ===" -Type Info
     Write-ColorOutput "Number: #$($prInfo.number)" -Type Info
     Write-ColorOutput "Title: $($prInfo.title)" -Type Info
-    Write-ColorOutput "Author: $($prInfo.author.login)" -Type Info
+    $authorName = if ($prInfo.author -and $prInfo.author.login) { $prInfo.author.login } else { "[deleted user]" }
+    Write-ColorOutput "Author: $authorName" -Type Info
     Write-ColorOutput "Branch: $($prInfo.headRefName) -> $($prInfo.baseRefName)" -Type Info
     Write-ColorOutput "Mergeable: $($prInfo.mergeable)" -Type Info
     
