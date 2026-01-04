@@ -4,6 +4,7 @@ MQL5 Algo Forge / [LengKundee](https://www.mql5.com/en/users/LengKundee)
 
 ## Paths
 - Terminal data: `C:\Users\USER\AppData\Roaming\MetaQuotes\Terminal\53785E099C927DB68A545C249CDBCE06\MQL5`
+  > **Note**: The terminal hash `53785E099C927DB68A545C249CDBCE06` is specific to this installation. To find your terminal hash, navigate to `%APPDATA%\MetaQuotes\Terminal\` and look for the folder containing your MT5 data.
 - Experts: `MQL5\Experts\Advisors`
 - Profiles: `MQL5\Profiles` (charts/templates)
 - Logs: `MQL5\Logs`
@@ -16,7 +17,7 @@ MQL5 Algo Forge / [LengKundee](https://www.mql5.com/en/users/LengKundee)
 ## Maintenance
 - Profiles fix: copy defaults into `Profiles\Charts\<profile>` if missing/empty.
 - Compile EAs in MetaEditor (F7) after updates.
-- Keep API/credentials out of this tree (store in Credential Manager).
+- Keep API/credentials out of this tree (store in Windows Credential Manager).
 
 ## Git (Forge)
 - Upstream: `https://forge.mql5.io/LengKundee/mql5.git`
