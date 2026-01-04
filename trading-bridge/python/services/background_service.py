@@ -73,12 +73,12 @@ logger = logging.getLogger(__name__)
 class BackgroundTradingService:
     """Main background trading service"""
 
-    def __init__(self, bridge_port: int = 5555, use_ai: bool = False):
+    def __init__(self, bridge_port: int = 5500, use_ai: bool = False):
         """
         Initialize background trading service
 
         Args:
-            bridge_port: Port for MQL5 bridge
+            bridge_port: Port for MQL5 bridge (default: 5500 for Exness/Docker compatibility)
             use_ai: If True, use AI trading service instead of basic service
         """
         self.bridge_port = bridge_port

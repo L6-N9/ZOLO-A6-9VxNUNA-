@@ -26,7 +26,7 @@ try:
     import threading
     
     print("[1/4] Creating bridge instance...")
-    bridge = MQL5Bridge(port=5555, host="127.0.0.1")
+    bridge = MQL5Bridge(port=5500, host="127.0.0.1")
     print("    ✓ Bridge created")
     print(f"    - Port: {bridge.port}")
     print(f"    - Host: {bridge.host}")
@@ -73,7 +73,7 @@ try:
     print()
     
     if status['connection_status'] == 'listening':
-        print("✅ Bridge is LISTENING on port 5555")
+        print("✅ Bridge is LISTENING on port 5500")
         print("✅ Ready to receive connections from MQL5 EA")
         print()
         print("Next steps:")

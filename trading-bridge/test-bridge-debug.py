@@ -30,7 +30,7 @@ def test_bridge():
     # Test 1: Create bridge instance
     print("\n[Test 1] Creating bridge instance...")
     try:
-        bridge = MQL5Bridge(port=5555)
+        bridge = MQL5Bridge(port=5500, host="127.0.0.1")
         print("  ✓ Bridge instance created")
     except Exception as e:
         print(f"  ✗ Failed to create bridge: {e}")

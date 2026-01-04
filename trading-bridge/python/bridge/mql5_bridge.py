@@ -47,12 +47,12 @@ logger = logging.getLogger(__name__)
 class MQL5Bridge:
     """Bridge between Python trading engine and MQL5 EA"""
     
-    def __init__(self, port: int = 5555, host: str = "127.0.0.1"):
+    def __init__(self, port: int = 5500, host: str = "127.0.0.1"):
         """
         Initialize MQL5 Bridge
         
         Args:
-            port: ZeroMQ port number
+            port: ZeroMQ port number (default: 5500 for Exness/Docker compatibility)
             host: Host address (default: localhost)
         """
         self.port = port
@@ -245,7 +245,7 @@ class MQL5Bridge:
 
 
 # Convenience function for standalone usage
-def start_bridge(port: int = 5555, host: str = "127.0.0.1"):
+def start_bridge(port: int = 5500, host: str = "127.0.0.1"):
     """Start bridge server (for standalone usage)"""
     bridge = MQL5Bridge(port=port, host=host)
     try:
