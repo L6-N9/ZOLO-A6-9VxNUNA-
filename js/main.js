@@ -12,6 +12,31 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
+ * Utility: Debounce function
+ */
+function debounce(func, wait = 100) {
+    let timeout;
+    return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+}
+
+/**
+ * Utility: Throttle function
+ */
+function throttle(func, limit = 100) {
+    let inThrottle;
+    return function(...args) {
+        if (!inThrottle) {
+            func.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    };
+}
+
+/**
  * Navigation functionality
  */
 function initNavigation() {
@@ -60,8 +85,11 @@ function initNavigation() {
 function initScrollEffects() {
     const navbar = document.querySelector('.navbar');
     let lastScroll = 0;
-    
-    window.addEventListener('scroll', () => {
+
+    // Performance: Throttle scroll events to prevent excessive function calls.
+    // The scroll handler is limited to executing once every 100ms, improving
+    // rendering performance and reducing CPU load during fast scrolling.
+    const handleScroll = () => {
         const currentScroll = window.pageYOffset;
         
         // Navbar background on scroll
@@ -72,7 +100,9 @@ function initScrollEffects() {
         }
         
         lastScroll = currentScroll;
-    });
+    };
+
+    window.addEventListener('scroll', throttle(handleScroll, 100));
 }
 
 /**
@@ -162,31 +192,6 @@ function typeWriter(element, text, speed = 50) {
     type();
 }
 
-/**
- * Utility: Debounce function
- */
-function debounce(func, wait = 100) {
-    let timeout;
-    return function(...args) {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(this, args), wait);
-    };
-}
-
-/**
- * Utility: Throttle function
- */
-function throttle(func, limit = 100) {
-    let inThrottle;
-    return function(...args) {
-        if (!inThrottle) {
-            func.apply(this, args);
-            inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
-        }
-    };
-}
-
 // Console branding
 console.log(`
 %c⚡ ZOLO-A6-9VxNUNA %c
@@ -195,4 +200,3 @@ https://github.com/Mouy-leng/ZOLO-A6-9VxNUNA-
 
 © 2025 A6-9V Organization
 `, 'color: #00ff88; font-size: 20px; font-weight: bold;', 'color: #8b949e;');
-
