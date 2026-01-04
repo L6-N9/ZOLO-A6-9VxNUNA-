@@ -131,7 +131,7 @@ try:
     from bridge.signal_manager import TradeSignal
     
     # Create bridge instance (don't start it)
-    bridge = MQL5Bridge(port=5555, host="127.0.0.1")
+    bridge = MQL5Bridge(port=5500, host="127.0.0.1")
     print("    ✓ MQL5Bridge instance created")
     print(f"    - Port: {bridge.port}")
     print(f"    - Host: {bridge.host}")
@@ -171,11 +171,11 @@ if config_file.exists():
     with open(config_file, 'r') as f:
         content = f.read()
         if '5500' in content:
-            print("    ⚠ Configuration mentions port 5500")
+            print("    ✓ Configuration mentions port 5500 (default)")
         if '5555' in content:
-            print("    ✓ Configuration mentions port 5555 (default)")
+            print("    ⚠ Configuration mentions port 5555 (old default)")
     
-print(f"    Default bridge port: 5555")
+print(f"    Default bridge port: 5500")
 print(f"    Note: Ensure MQL5 EA uses same port")
 
 print()
@@ -185,7 +185,7 @@ print("[6/6] Checking background service integration...")
 try:
     from services.background_service import BackgroundTradingService
     
-    service = BackgroundTradingService(bridge_port=5555)
+    service = BackgroundTradingService(bridge_port=5500)
     print("    ✓ BackgroundTradingService instance created")
     print(f"    - Bridge port: {service.bridge_port}")
     print(f"    - Modules available: {service.modules_available}")
@@ -242,7 +242,7 @@ if not issues and not warnings:
     print("   - Background service can receive signals")
     print()
     print("Next steps:")
-    print("   1. Ensure MQL5 EA is configured to connect to port 5555")
+    print("   1. Ensure MQL5 EA is configured to connect to port 5500")
     print("   2. Start the background service: python run-trading-service.py")
     print("   3. Verify bridge connection in logs")
 else:

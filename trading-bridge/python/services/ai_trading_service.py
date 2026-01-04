@@ -70,12 +70,12 @@ class AITradingService:
     Integrates all AI components for autonomous trading
     """
     
-    def __init__(self, bridge_port: int = 5555, config: Optional[Dict] = None):
+    def __init__(self, bridge_port: int = 5500, config: Optional[Dict] = None):
         """
         Initialize AI Trading Service
         
         Args:
-            bridge_port: Port for MQL5 bridge
+            bridge_port: Port for MQL5 bridge (default: 5500 for Exness/Docker compatibility)
             config: Configuration dictionary
         """
         self.bridge_port = bridge_port
