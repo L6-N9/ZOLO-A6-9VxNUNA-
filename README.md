@@ -3,6 +3,7 @@
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-00ff88?style=for-the-badge&logo=github)](https://mouy-leng.github.io/ZOLO-A6-9VxNUNA-/)
 [![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 [![Windows 11](https://img.shields.io/badge/Windows%2011-25H2-0078D4?style=for-the-badge&logo=windows11)](https://www.microsoft.com/windows)
+[![Privacy Badger](https://img.shields.io/badge/Privacy-Badger-EF5533?style=for-the-badge&logo=eff)](https://privacybadger.org)
 
 > **AI-Powered Trading System & Complete Device Automation Platform for Windows 11**
 > **✨ Now optimized for low-spec systems - No more freezing!**
@@ -18,11 +19,23 @@ ZOLO-A6-9VxNUNA is a comprehensive system that combines:
 - 🤖 **AI-Powered Trading Engine** - Advanced algorithms for Forex & Gold trading on MetaTrader 5
 - 🖥️ **Windows 11 Automation** - Complete device setup and configuration scripts
 - 🔒 **Enterprise Security** - Multi-layer security with encryption and validation
+- 🛡️ **Privacy Protection** - Privacy Badger integration for tracker blocking
 - ☁️ **Cloud Synchronization** - Seamless sync with OneDrive, Google Drive, and Dropbox
 - 🔄 **Git Integration** - Automated Git operations with multi-remote support
+- 🤖 **AI Automation** - Copilot, Jules, and Cursor integration for workflow automation
 - ⚡ **Performance Optimized** - Works smoothly on low-spec systems (Intel i3, 8GB RAM)
 
 ## 🆕 Recent Updates
+
+### Privacy Badger Integration (2026-01-04)
+**Enhanced Privacy and Security!**
+
+- ✅ Privacy Badger integration for automatic tracker blocking
+- ✅ GenX Trading global links and resources added
+- ✅ Automated git workflow with AI assistance (@copilot, @jules, @cursor)
+- ✅ Comprehensive automation for pull, push, commit, and merge operations
+
+**📖 See**: [Privacy Badger Info](PRIVACY-BADGER-INFO.md) | [GenX Trading Info](GENX-TRADING-INFO.md) | [Auto Git Workflow](auto-git-workflow.ps1)
 
 ### Performance Optimization (2025-12-25)
 **Fixed laptop freezing issue during trade execution!**
@@ -161,6 +174,33 @@ Automated tools for managing Git branches and pull requests:
 
 **📖 See**: [Branch Management Guide](BRANCH-MANAGEMENT-GUIDE.md) for complete documentation
 
+### Automated Git Workflow
+
+**AI-Powered Git Automation with @copilot, @jules, @cursor**
+
+```powershell
+# Full automated workflow (pull, commit, push, merge)
+.\auto-git-workflow.ps1 -Action auto
+
+# Individual operations
+.\auto-git-workflow.ps1 -Action pull
+.\auto-git-workflow.ps1 -Action commit -Message "Your message"
+.\auto-git-workflow.ps1 -Action push
+.\auto-git-workflow.ps1 -Action merge -Branch main
+
+# Quick auto-commit and push
+.\auto-git-workflow.ps1
+```
+
+Features:
+- ✅ **Auto-Pull** - Automatically fetches and merges with conflict resolution
+- ✅ **Smart Commits** - AI-generated commit messages based on changes
+- ✅ **Multi-Remote Push** - Pushes to all configured remotes
+- ✅ **Auto-Merge** - Intelligent branch merging with conflict handling
+- ✅ **Workflow Logging** - Tracks all operations in git-workflow-log.txt
+
+**📖 See**: [Auto Git Workflow Script](auto-git-workflow.ps1) for detailed usage
+
 ## 📋 Features
 
 ### Windows Setup Scripts
@@ -174,13 +214,28 @@ Automated tools for managing Git branches and pull requests:
 
 ### Git Automation
 - ✅ Multi-remote repository support
-- ✅ Automated git operations
+- ✅ Automated git operations with AI assistance
+- ✅ Intelligent commit message generation
+- ✅ Auto-pull with conflict resolution
+- ✅ Auto-push to all remotes
+- ✅ Auto-merge with branch management
+- ✅ Secure credential management
+- ✅ Workflow logging and tracking
 - ✅ Secure credential management
 
 ### Security Validation
 - ✅ Comprehensive security checks
 - ✅ Token security validation
 - ✅ Script integrity verification
+
+### Privacy Protection
+- ✅ **Privacy Badger Integration** - Automatic tracker blocking
+- ✅ **EFF Support** - Electronic Frontier Foundation tools
+- ✅ **Tracker Monitoring** - Monitor and block hidden trackers
+- ✅ **Privacy-First Development** - Build with privacy in mind
+- ✅ **Local Data Protection** - All sensitive data kept local
+
+**📖 See**: [Privacy Badger Info](PRIVACY-BADGER-INFO.md) for tracker details
 
 ### VPS 24/7 Trading System
 - ✅ Exness MT5 Terminal (24/7 operation)
@@ -212,6 +267,25 @@ Automated tools for managing Git branches and pull requests:
 | [my-drive-projects](https://github.com/A6-9V/my-drive-projects) | Secondary - Device skeleton | 🟢 Active |
 | [I-bride_bridge3rd](https://github.com/A6-9V/I-bride_bridge3rd) | Bridge - Third-party integration | 🟢 Active |
 
+## 🌐 GenX Trading Global
+
+**Organization**: GenX Trading  
+**Time Zone**: UTC -12:00  
+**GitHub Org**: [A6-9V](https://github.com/organizations/A6-9V)
+
+### Quick Links
+
+| Resource | Purpose |
+|----------|---------|
+| [GitHub Organization](https://github.com/organizations/A6-9V) | Code & Projects |
+| [ORCID Profile](https://orcid.org/0009-0009-3473-2131) | Research ID |
+| [ChatGPT Assistant 1](https://chatgpt.com/gg/v/6945af67a93c819e9ec60205fcc93361) | Trading Strategy |
+| [ChatGPT Assistant 2](https://chatgpt.com/gg/v/6955e0160240819c881221a2de84053d) | Advanced Analysis |
+| [Perplexity AI](https://www.perplexity.ai/collections/genx-bx-sYWiZQGIQge9LAWdTc5pGg) | Research Collection |
+| [WhatsApp Group](https://chat.whatsapp.com/BjT9siY89k2LxYE1X1g8DC) | Team Communication |
+
+**📖 See**: [GenX Trading Info](GENX-TRADING-INFO.md) for complete details
+
 ## 💻 System Requirements
 
 | Component | Requirement |
@@ -230,6 +304,8 @@ Automated tools for managing Git branches and pull requests:
 - ✅ Token validation and rotation
 - ✅ HTTPS enforcement on all communications
 - ✅ Automated security audits
+- ✅ Privacy Badger tracker blocking
+- ✅ EFF privacy tools integration
 
 Sensitive files including credentials, API keys, certificates, and logs are automatically excluded from version control via `.gitignore`.
 
@@ -252,6 +328,8 @@ Sensitive files including credentials, API keys, certificates, and logs are auto
 - **DEVICE-SKELETON.md** - Complete device structure blueprint
 - **PROJECT-BLUEPRINTS.md** - Detailed project blueprints
 - **SYSTEM-INFO.md** - System specifications
+- **PRIVACY-BADGER-INFO.md** - Privacy Badger integration and tracker info
+- **GENX-TRADING-INFO.md** - GenX Trading global links and resources
 - **WORKSPACE-SETUP.md** - Workspace setup guide
 - **VPS-SETUP-GUIDE.md** - VPS 24/7 trading system guide
 - **AUTOMATION-RULES.md** - Automation patterns
