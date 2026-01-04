@@ -9,10 +9,10 @@ MQL5 Algo Forge / [LengKundee](https://www.mql5.com/en/users/LengKundee)
 - Profiles: `MQL5\Profiles` (charts/templates)
 - Logs: `MQL5\Logs`
 
-## Active EAs (enhanced)
-- `ExpertMACD_Enhanced.mq5`
-- `ExpertMAMA_Enhanced.mq5`
-- `ExpertMAPSAR_Enhanced.mq5`
+## Active EAs
+- `SmartMoneyConceptEA.mq5` - Smart Money Concept trading strategy
+- `CryptoSmartMoneyEA.mq5` - Cryptocurrency Smart Money EA
+- `PythonBridgeEA.mq5` - Python-MQL5 bridge for external signal execution
 
 ## Maintenance
 - Profiles fix: copy defaults into `Profiles\Charts\<profile>` if missing/empty.
