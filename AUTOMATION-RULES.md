@@ -32,7 +32,14 @@ This document defines the automation rules and intelligent defaults used by the 
 - **Firewall Rules**: Automatically created for cloud services
 - **Controlled Folder Access**: Cloud folders automatically allowed
 
-### Git Operations (`auto-git-push.ps1`)
+### Git Operations (`auto-git-push.ps1`, `auto-git-workflow.ps1`)
+
+#### Automated Git Workflow
+- **Full Automation**: Pull, commit, push, and merge handled automatically
+- **AI Integration**: Powered by @copilot, @jules, @cursor
+- **Smart Commits**: Intelligent commit message generation based on changes
+- **Conflict Resolution**: Automatic merge conflict handling
+- **Multi-Remote Support**: Pushes to all configured remotes
 
 #### Credential Management
 - **Token Storage**: Saved in `git-credentials.txt` (gitignored)
@@ -42,12 +49,17 @@ This document defines the automation rules and intelligent defaults used by the 
 #### Commit Strategy
 - **Auto-commit**: All changes committed automatically
 - **Commit Message**: Intelligent messages based on file changes
-- **Branch**: Always uses `main` branch
+- **Branch**: Always uses current or specified branch
 
 #### Push Strategy
 - **Automatic Push**: Pushes immediately after commit
 - **Error Handling**: Graceful failure with helpful messages
 - **Token Usage**: Uses saved token automatically
+
+#### Merge Strategy
+- **Auto-Merge**: Merges branches with conflict resolution
+- **Strategy**: Uses appropriate merge strategy based on situation
+- **Branch Management**: Maintains branch integrity
 
 ### Cloud Services
 
@@ -73,8 +85,11 @@ This document defines the automation rules and intelligent defaults used by the 
 ### Scripts
 - `auto-setup.ps1` - Automated Windows configuration
 - `auto-git-push.ps1` - Automated git operations with token
+- `auto-git-workflow.ps1` - Complete git workflow automation (pull, commit, push, merge)
 - `run-all-auto.ps1` - Master script that runs everything
 - `git-setup.ps1` - Initial git repository setup
+- `merge-branches.ps1` - Interactive branch merging
+- `review-and-push-all-repos.ps1` - Review and push to all repositories
 
 ### Configuration
 - `git-credentials.txt` - GitHub tokens (gitignored)
@@ -85,13 +100,21 @@ This document defines the automation rules and intelligent defaults used by the 
 - `README.md` - Project documentation
 - `SYSTEM-INFO.md` - System specifications and configuration
 - `MANUAL-SETUP-GUIDE.md` - Manual steps guide
+- `PRIVACY-BADGER-INFO.md` - Privacy Badger integration
+- `GENX-TRADING-INFO.md` - GenX Trading global information
 
 ## Execution Flow
 
-1. **User runs**: `RUN-AUTO-SETUP.bat` or `run-all-auto.ps1`
-2. **Windows Setup**: Runs automatically with intelligent defaults
-3. **Git Push**: Runs automatically using saved token
-4. **Summary**: Shows what was completed
+1. **User runs**: `AUTO-GIT-WORKFLOW.bat` or `auto-git-workflow.ps1`
+2. **Auto-Pull**: Fetches and merges from all remotes
+3. **Auto-Commit**: Commits all changes with AI-generated message
+4. **Auto-Push**: Pushes to all configured remotes
+5. **Auto-Merge**: (Optional) Merges branches if specified
+6. **Summary**: Shows what was completed and logs to file
+
+**Alternative flows**:
+- `RUN-AUTO-SETUP.bat` or `run-all-auto.ps1` - Complete system setup
+- Individual action scripts for specific tasks
 
 ## Error Handling
 
