@@ -76,6 +76,9 @@ log-summary.txt
 *.tmp
 *.temp
 .cache/
+__pycache__/
+*.pyc
+*.pyo
 
 # Backup files
 *.bak
