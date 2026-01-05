@@ -140,9 +140,22 @@ The log includes:
 
 **Solution**:
 ```powershell
-Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
+# Temporary bypass for current session
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force
 .\launch-from-html-logs.ps1
+
+# Or permanently set RemoteSigned policy (Administrator required)
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
+
+### Administrator Privileges
+
+**Problem**: VPS system requires Administrator privileges
+
+**Solution**:
+1. Right-click `LAUNCH-FROM-HTML-LOGS.bat` and select "Run as Administrator"
+2. Or run PowerShell as Administrator and execute the script
+3. The script will attempt to auto-elevate privileges when needed
 
 ### Components Not Starting
 
@@ -229,6 +242,17 @@ If you have multiple HTML log files, create separate launch scripts:
 - The HTML log path is not committed to Git
 - Launch logs do not contain sensitive data
 - All credentials are managed through Windows Credential Manager
+- Scripts use `-ExecutionPolicy RemoteSigned` for better security
+- VPS system components may require Administrator privileges
+- The launch script will automatically elevate privileges when needed
+
+## Administrator Privileges
+
+Some components (particularly the VPS trading system) require Administrator privileges to run properly. The launch script will:
+1. Check if running with Administrator privileges
+2. Attempt to elevate privileges automatically when launching VPS system
+3. Warn users if elevation is needed but not available
+4. Continue launching other components that don't require elevation
 
 ## Best Practices
 

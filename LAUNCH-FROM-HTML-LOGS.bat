@@ -16,7 +16,7 @@ echo.
 cd /d "%~dp0"
 
 :: Launch the PowerShell script
-powershell.exe -ExecutionPolicy Bypass -File "%~dp0launch-from-html-logs.ps1"
+powershell.exe -ExecutionPolicy RemoteSigned -File "%~dp0launch-from-html-logs.ps1"
 
 echo.
 echo ========================================
