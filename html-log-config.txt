@@ -1,0 +1,19 @@
+# HTML Log Configuration
+# This file stores the path to the ReportTrade HTML log file
+# Update this file to change the HTML log location
+
+# Primary HTML Log Path
+HTML_LOG_PATH=J:\OneDrive-Backup-20251227-002233\ReportTrade-279410452.html
+
+# Alternative paths (comma-separated, will be tried in order if primary fails)
+ALT_HTML_LOG_PATHS=J:\OneDrive-Backup*\ReportTrade*.html,$env:USERPROFILE\OneDrive\*Backup*\ReportTrade*.html,D:\OneDrive*\ReportTrade*.html
+
+# Launch Options
+OPEN_HTML_LOG_ON_STARTUP=true
+LAUNCH_VPS_SYSTEM=true
+LAUNCH_TRADING_SYSTEM=true
+OPEN_GITHUB_WEBSITE=true
+
+# Log Settings
+KEEP_LAUNCH_LOGS=true
+LAUNCH_LOG_DIR=logs
