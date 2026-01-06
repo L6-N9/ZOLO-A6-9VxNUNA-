@@ -959,6 +959,13 @@ section {
     }
 }
 
+@media (max-width: 968px) {
+    .footer-links {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-xl);
+    }
+}
+
 @media (max-width: 768px) {
     .nav-links {
         display: none;
