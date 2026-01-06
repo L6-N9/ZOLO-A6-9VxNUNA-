@@ -57,24 +57,27 @@ Edit `html-log-config.txt` to configure your HTML log location:
 
 ```
 # Primary HTML Log Path
-HTML_LOG_PATH=J:\OneDrive-Backup-20251227-002233\ReportTrade-279410452.html
+HTML_LOG_PATH=%USERPROFILE%\Documents\ReportTrade.html
 
 # Alternative paths (will be tried in order if primary fails)
-ALT_HTML_LOG_PATHS=J:\OneDrive-Backup*\ReportTrade*.html,$env:USERPROFILE\OneDrive\*Backup*\ReportTrade*.html
+ALT_HTML_LOG_PATHS=%USERPROFILE%\Documents\*ReportTrade*.html,%USERPROFILE%\OneDrive*\*ReportTrade*.html,D:\Backup*\ReportTrade*.html
 
 # Launch Options
 OPEN_HTML_LOG_ON_STARTUP=true
 LAUNCH_VPS_SYSTEM=true
 LAUNCH_TRADING_SYSTEM=true
 OPEN_GITHUB_WEBSITE=true
+
+# Website Configuration
+GITHUB_WEBSITE_URL=https://mouy-leng.github.io/ZOLO-A6-9VxNUNA-/
 ```
 
 ### Automatic Search
 
-If the HTML log file is not found at the specified path, the system will automatically search:
-- `J:\OneDrive-Backup-*\ReportTrade*.html`
-- `%USERPROFILE%\OneDrive\*Backup*\ReportTrade*.html`
-- `D:\OneDrive*\ReportTrade*.html`
+If the HTML log file is not found at the specified path, the system will automatically search alternative locations (sorted by date to open the newest file):
+- `%USERPROFILE%\Documents\*ReportTrade*.html`
+- `%USERPROFILE%\OneDrive*\*ReportTrade*.html`
+- `D:\Backup*\ReportTrade*.html`
 
 ## Components Launched
 
@@ -141,11 +144,11 @@ The log includes:
 **Solution**:
 ```powershell
 # Temporary bypass for current session
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
 .\launch-from-html-logs.ps1
 
-# Or permanently set RemoteSigned policy (Administrator required)
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+# Or permanently set policy (Administrator required)
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope CurrentUser
 ```
 
 ### Administrator Privileges
@@ -240,11 +243,12 @@ If you have multiple HTML log files, create separate launch scripts:
 - HTML log files may contain sensitive trading information
 - Ensure log files are stored securely
 - The HTML log path is not committed to Git
-- Launch logs do not contain sensitive data
+- Launch logs contain timestamps and user identity for audit trails
 - All credentials are managed through Windows Credential Manager
-- Scripts use `-ExecutionPolicy RemoteSigned` for better security
+- Scripts use `-ExecutionPolicy Bypass` and `-NoProfile` for reliability
 - VPS system components may require Administrator privileges
 - The launch script will automatically elevate privileges when needed
+- **Note on Selective Elevation**: This script does not use `#Requires -RunAsAdministrator` at the top level to allow non-admin components to launch even if elevation fails for VPS components.
 
 ## Administrator Privileges
 

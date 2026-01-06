@@ -45,6 +45,7 @@ function Read-Configuration {
         LaunchVpsSystem = $true
         LaunchTradingSystem = $true
         OpenGithubWebsite = $true
+        GithubWebsiteUrl = "https://mouy-leng.github.io/ZOLO-A6-9VxNUNA-/"
         KeepLaunchLogs = $true
         LaunchLogDir = "logs"
     }
@@ -54,7 +55,9 @@ function Read-Configuration {
             $content = Get-Content $configFile -ErrorAction SilentlyContinue
             foreach ($line in $content) {
                 if ($line -match '^HTML_LOG_PATH=(.+)$') {
-                    $config.HtmlLogPath = $matches[1].Trim()
+                    $val = $matches[1].Trim()
+                    # Resolve environment variables like %USERPROFILE%
+                    $config.HtmlLogPath = [System.Environment]::ExpandEnvironmentVariables($val)
                 }
                 if ($line -match '^ALT_HTML_LOG_PATHS=(.+)$') {
                     $paths = $matches[1].Trim() -split ','
@@ -72,11 +75,20 @@ function Read-Configuration {
                 if ($line -match '^OPEN_GITHUB_WEBSITE=(true|false)$') {
                     $config.OpenGithubWebsite = $matches[1] -eq 'true'
                 }
+                if ($line -match '^GITHUB_WEBSITE_URL=(.+)$') {
+                    $config.GithubWebsiteUrl = $matches[1].Trim()
+                }
                 if ($line -match '^KEEP_LAUNCH_LOGS=(true|false)$') {
                     $config.KeepLaunchLogs = $matches[1] -eq 'true'
                 }
                 if ($line -match '^LAUNCH_LOG_DIR=(.+)$') {
-                    $config.LaunchLogDir = $matches[1].Trim()
+                    $val = $matches[1].Trim()
+                    # Basic path traversal protection
+                    if ($val -like "*..*" -or $val -like "*:*" -or $val -startsWith "/" -or $val -startsWith "\") {
+                        Write-Host "Warning: Invalid LAUNCH_LOG_DIR in config, using default 'logs'" -ForegroundColor Yellow
+                    } else {
+                        $config.LaunchLogDir = $val
+                    }
                 }
             }
         } catch {
@@ -90,12 +102,17 @@ function Read-Configuration {
 # Read configuration
 $config = Read-Configuration
 
-# Use parameter if provided, otherwise use config file value
-if ([string]::IsNullOrEmpty($HtmlLogPath)) {
-    $HtmlLogPath = $config.HtmlLogPath
-}
+    # Use parameter if provided, otherwise use config file value
+    if ([string]::IsNullOrEmpty($HtmlLogPath)) {
+        $HtmlLogPath = $config.HtmlLogPath
+    }
+    
+    # Selective Elevation Design: 
+    # This script does not use '#Requires -RunAsAdministrator' at the top.
+    # Instead, it handles elevation selectively for components that need it (like VPS system).
+    # This ensures other components can still launch even if the user declines elevation.
 
-# Color functions for output
+    # Color functions for output
 function Write-Header {
     param([string]$Message)
     Write-Host ""
@@ -130,7 +147,8 @@ function Write-LaunchLog {
     param([string]$Message)
     if ($config.KeepLaunchLogs -and $launchLogFile) {
         $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-        $logMessage = "[$timestamp] $Message"
+        $currentUser = [Security.Principal.WindowsIdentity]::GetCurrent().Name
+        $logMessage = "[$timestamp] [$currentUser] $Message"
         Add-Content -Path $launchLogFile -Value $logMessage -ErrorAction SilentlyContinue
     }
     Write-Status $Message "INFO"
@@ -145,9 +163,12 @@ function Start-PowerShellScript {
         [switch]$RequireElevation
     )
     
-    $argList = @('-ExecutionPolicy', 'RemoteSigned', '-File', $ScriptPath)
+    # Use Bypass and NoProfile for consistency and reliability
+    $argList = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $ScriptPath)
     
     try {
+        # Note: Start-Process only indicates if the process was successfully started.
+        # It does not wait for or validate the actual execution result of the script.
         if ($RequireElevation -and -not $isAdmin) {
             Start-Process powershell.exe -ArgumentList $argList -Verb RunAs -WindowStyle $(if($Hidden){'Hidden'}else{'Normal'})
         } else {
@@ -198,12 +219,18 @@ if (-not $SkipLogOpen -and $config.OpenHtmlLogOnStartup) {
         Write-Status "Searching for HTML log in configured alternative locations..." "INFO"
         
         foreach ($searchPath in $config.AltHtmlLogPaths) {
-            $foundFiles = Get-ChildItem -Path $searchPath -ErrorAction SilentlyContinue
+            # Sort by LastWriteTime to get the newest file first
+            $foundFiles = Get-ChildItem -Path $searchPath -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending
             if ($foundFiles) {
-                Write-Status "Found alternative HTML log: $($foundFiles[0].FullName)" "INFO"
-                Write-LaunchLog "Using alternative HTML log: $($foundFiles[0].FullName)"
-                Start-Process $foundFiles[0].FullName
-                break
+                $fileToOpen = $foundFiles[0].FullName
+                Write-Status "Found alternative HTML log: $fileToOpen" "INFO"
+                Write-LaunchLog "Using alternative HTML log: $fileToOpen"
+                try {
+                    Start-Process $fileToOpen
+                    break
+                } catch {
+                    Write-Status "Failed to open found file $fileToOpen: $_" "WARNING"
+                }
             }
         }
     }
@@ -280,7 +307,7 @@ Start-Sleep -Seconds 1
 # 2d: Open GitHub Pages website
 if ($config.OpenGithubWebsite) {
     Write-Status "Opening GitHub Pages website..." "INFO"
-    $websiteUrl = "https://mouy-leng.github.io/ZOLO-A6-9VxNUNA-/"
+    $websiteUrl = $config.GithubWebsiteUrl
     try {
         Start-Process $websiteUrl
         Write-LaunchLog "GitHub Pages website opened"
@@ -298,11 +325,24 @@ Write-Header "Launch Complete"
 Write-Status "Repository launch sequence completed!" "OK"
 Write-Status "" "INFO"
 Write-Status "Active Components:" "INFO"
-Write-Status "  - HTML Trade Report Log" "INFO"
-Write-Status "  - VPS Trading System" "INFO"
-Write-Status "  - Trading Bridge" "INFO"
-Write-Status "  - GitHub Pages Website" "INFO"
-Write-Status "  - Repository Startup Scripts" "INFO"
+
+if ($config.OpenHtmlLogOnStartup -and -not $SkipLogOpen) {
+    Write-Status "  - HTML Trade Report Log" "INFO"
+}
+if ($config.LaunchVpsSystem) {
+    Write-Status "  - VPS Trading System" "INFO"
+}
+if ($config.LaunchTradingSystem) {
+    Write-Status "  - Trading Bridge" "INFO"
+}
+if ($config.OpenGithubWebsite) {
+    Write-Status "  - GitHub Pages Website" "INFO"
+}
+
+$startScript = Join-Path $PSScriptRoot "start.ps1"
+if (Test-Path $startScript) {
+    Write-Status "  - Repository Startup Scripts" "INFO"
+}
 Write-Status "" "INFO"
 if ($config.KeepLaunchLogs -and $launchLogFile) {
     Write-Status "Launch log saved to: $launchLogFile" "INFO"
