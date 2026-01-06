@@ -5,7 +5,12 @@
 .DESCRIPTION
     Opens the ReportTrade HTML log file and launches the complete repository startup sequence.
     This script provides a unified entry point using the HTML trading logs as a launch reference.
-    Note: Some components (VPS system) may require Administrator privileges.
+    
+    NOTE: This script intentionally does NOT require administrator privileges by default.
+    Unlike start-vps-system.ps1 which has #Requires -RunAsAdministrator, this script
+    performs selective elevation only for components that need it (e.g., VPS system).
+    This allows the script to run in non-admin mode while still launching privileged components.
+    
 .PARAMETER HtmlLogPath
     Path to the HTML log file. If not specified, reads from html-log-config.txt or uses default.
 .PARAMETER SkipLogOpen
@@ -54,34 +59,44 @@ function Read-Configuration {
         try {
             $content = Get-Content $configFile -ErrorAction SilentlyContinue
             foreach ($line in $content) {
-                if ($line -match '^HTML_LOG_PATH=(.+)$') {
+                # Normalize line: trim, remove inline comments, and skip empty/comment-only lines
+                $cleanLine = $line.Trim()
+                $commentIndex = $cleanLine.IndexOf('#')
+                if ($commentIndex -ge 0) {
+                    $cleanLine = $cleanLine.Substring(0, $commentIndex).Trim()
+                }
+                if ([string]::IsNullOrWhiteSpace($cleanLine)) {
+                    continue
+                }
+                
+                if ($cleanLine -match '^HTML_LOG_PATH=(.+)$') {
                     $val = $matches[1].Trim()
                     # Resolve environment variables like %USERPROFILE%
                     $config.HtmlLogPath = [System.Environment]::ExpandEnvironmentVariables($val)
                 }
-                if ($line -match '^ALT_HTML_LOG_PATHS=(.+)$') {
+                if ($cleanLine -match '^ALT_HTML_LOG_PATHS=(.+)$') {
                     $paths = $matches[1].Trim() -split ','
                     $config.AltHtmlLogPaths = $paths | ForEach-Object { $_.Trim() }
                 }
-                if ($line -match '^OPEN_HTML_LOG_ON_STARTUP=(true|false)$') {
+                if ($cleanLine -match '^OPEN_HTML_LOG_ON_STARTUP=(true|false)$') {
                     $config.OpenHtmlLogOnStartup = $matches[1] -eq 'true'
                 }
-                if ($line -match '^LAUNCH_VPS_SYSTEM=(true|false)$') {
+                if ($cleanLine -match '^LAUNCH_VPS_SYSTEM=(true|false)$') {
                     $config.LaunchVpsSystem = $matches[1] -eq 'true'
                 }
-                if ($line -match '^LAUNCH_TRADING_SYSTEM=(true|false)$') {
+                if ($cleanLine -match '^LAUNCH_TRADING_SYSTEM=(true|false)$') {
                     $config.LaunchTradingSystem = $matches[1] -eq 'true'
                 }
-                if ($line -match '^OPEN_GITHUB_WEBSITE=(true|false)$') {
+                if ($cleanLine -match '^OPEN_GITHUB_WEBSITE=(true|false)$') {
                     $config.OpenGithubWebsite = $matches[1] -eq 'true'
                 }
-                if ($line -match '^GITHUB_WEBSITE_URL=(.+)$') {
+                if ($cleanLine -match '^GITHUB_WEBSITE_URL=(.+)$') {
                     $config.GithubWebsiteUrl = $matches[1].Trim()
                 }
-                if ($line -match '^KEEP_LAUNCH_LOGS=(true|false)$') {
+                if ($cleanLine -match '^KEEP_LAUNCH_LOGS=(true|false)$') {
                     $config.KeepLaunchLogs = $matches[1] -eq 'true'
                 }
-                if ($line -match '^LAUNCH_LOG_DIR=(.+)$') {
+                if ($cleanLine -match '^LAUNCH_LOG_DIR=(.+)$') {
                     $val = $matches[1].Trim()
                     # Basic path traversal protection
                     if ($val -like "*..*" -or $val -like "*:*" -or $val -startsWith "/" -or $val -startsWith "\") {
@@ -155,6 +170,8 @@ function Write-LaunchLog {
 }
 
 # Helper function to launch PowerShell scripts
+# NOTE: The return value only indicates that Start-Process was invoked without throwing.
+# It does NOT wait for or validate the success or failure of the launched script itself.
 function Start-PowerShellScript {
     param(
         [string]$ScriptPath,
@@ -178,8 +195,10 @@ function Start-PowerShellScript {
                 Start-Process powershell.exe -ArgumentList $argList -WindowStyle $(if($Hidden){'Hidden'}else{'Normal'})
             }
         }
+        # Return true only means Start-Process didn't throw - not that the script succeeded
         return $true
     } catch {
+        # An exception here means the process could not be started (e.g., invalid path, access denied)
         return $false
     }
 }
