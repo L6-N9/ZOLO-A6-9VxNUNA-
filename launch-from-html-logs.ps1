@@ -76,7 +76,10 @@ function Read-Configuration {
                 }
                 if ($cleanLine -match '^ALT_HTML_LOG_PATHS=(.+)$') {
                     $paths = $matches[1].Trim() -split ','
-                    $config.AltHtmlLogPaths = $paths | ForEach-Object { $_.Trim() }
+                    # Expand environment variables in each alternative path
+                    $config.AltHtmlLogPaths = $paths | ForEach-Object { 
+                        [System.Environment]::ExpandEnvironmentVariables($_.Trim())
+                    }
                 }
                 if ($cleanLine -match '^OPEN_HTML_LOG_ON_STARTUP=(true|false)$') {
                     $config.OpenHtmlLogOnStartup = $matches[1] -eq 'true'
@@ -98,9 +101,10 @@ function Read-Configuration {
                 }
                 if ($cleanLine -match '^LAUNCH_LOG_DIR=(.+)$') {
                     $val = $matches[1].Trim()
-                    # Basic path traversal protection
-                    if ($val -like "*..*" -or $val -like "*:*" -or $val -startsWith "/" -or $val -startsWith "\") {
-                        Write-Host "Warning: Invalid LAUNCH_LOG_DIR in config, using default 'logs'" -ForegroundColor Yellow
+                    # Basic path traversal protection - only reject obvious directory traversal attempts
+                    # Allow normal Windows paths (C:\logs) and relative paths (logs)
+                    if ($val -like "*..*" -or $val -like "*../*" -or $val -like "*..\\*") {
+                        Write-Host "Warning: Invalid LAUNCH_LOG_DIR in config (path traversal attempt), using default 'logs'" -ForegroundColor Yellow
                     } else {
                         $config.LaunchLogDir = $val
                     }
