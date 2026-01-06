@@ -1,0 +1,28 @@
+# HTML Log Configuration
+# This file stores the path to the ReportTrade HTML log file
+# Update this file to change the HTML log location
+
+# Primary HTML Log Path
+# IMPORTANT: Update this path to match your actual HTML log file location
+# The default path below is an EXAMPLE - update it to your actual location
+# Common locations: %USERPROFILE%\Documents\, D:\Backup\, external drives, etc.
+# Example: HTML_LOG_PATH=%USERPROFILE%\Documents\Trading\ReportTrade.html
+HTML_LOG_PATH=%USERPROFILE%\Documents\ReportTrade.html
+
+# Alternative paths (comma-separated, will be tried in order if primary fails)
+# These are search patterns - update drive letters and paths to match your system
+# Example patterns for common locations:
+ALT_HTML_LOG_PATHS=%USERPROFILE%\Documents\*ReportTrade*.html,%USERPROFILE%\OneDrive*\*ReportTrade*.html,D:\Backup*\ReportTrade*.html
+
+# Launch Options
+OPEN_HTML_LOG_ON_STARTUP=true
+LAUNCH_VPS_SYSTEM=true
+LAUNCH_TRADING_SYSTEM=true
+OPEN_GITHUB_WEBSITE=true
+
+# Website Configuration
+GITHUB_WEBSITE_URL=https://mouy-leng.github.io/ZOLO-A6-9VxNUNA-/
+
+# Log Settings
+KEEP_LAUNCH_LOGS=true
+LAUNCH_LOG_DIR=logs

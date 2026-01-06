@@ -126,6 +126,29 @@ This will set up:
 .\start-trading-system.ps1
 ```
 
+### 🎯 HTML Log-Based Launch (New!)
+
+Launch all repository systems from your HTML trade report logs:
+
+```powershell
+# Double-click launch (easiest)
+LAUNCH-FROM-HTML-LOGS.bat
+
+# Or use PowerShell
+.\launch-from-html-logs.ps1
+```
+
+This will:
+- ✅ Open ReportTrade HTML logs in browser
+- ✅ Start VPS trading system
+- ✅ Launch trading bridge
+- ✅ Open GitHub Pages website
+- ✅ Initialize all repository components
+
+**Example log path**: `%USERPROFILE%\Documents\ReportTrade.html` (configure your actual path in `html-log-config.txt`)
+
+**📖 See**: [HTML Log Launch Guide](HTML-LOG-LAUNCH-GUIDE.md) for complete documentation
+
 ### VPS 24/7 Trading System
 
 Start the complete 24/7 automated trading system:
@@ -344,6 +367,7 @@ Sensitive files including credentials, API keys, certificates, and logs are auto
 - **AUTOMATION-RULES.md** - Automation patterns
 - **GITHUB-DESKTOP-RULES.md** - GitHub Desktop integration
 - **MANUAL-SETUP-GUIDE.md** - Manual setup instructions
+- **HTML-LOG-LAUNCH-GUIDE.md** - HTML log-based repository launch system
 
 ## 🏢 Organization
 
