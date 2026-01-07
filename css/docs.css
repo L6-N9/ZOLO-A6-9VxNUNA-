@@ -1,0 +1,850 @@
+/* Documentation Specific Styles */
+
+/* Documentation Header */
+.doc-header {
+    padding: 8rem 0 4rem;
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 136, 255, 0.05) 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.doc-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: #888;
+}
+
+.doc-breadcrumb a {
+    color: #00ff88;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.doc-breadcrumb a:hover {
+    color: #fff;
+}
+
+.doc-breadcrumb span {
+    color: #444;
+}
+
+.doc-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #00ff88 0%, #0088ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.doc-subtitle {
+    font-size: 1.25rem;
+    color: #aaa;
+    margin-bottom: 2rem;
+}
+
+.doc-meta {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+}
+
+.doc-version,
+.doc-date {
+    color: #888;
+}
+
+.doc-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #00ff88;
+}
+
+/* Table of Contents */
+.doc-toc {
+    padding: 3rem 0;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.toc-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 2rem;
+}
+
+.toc-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #fff;
+}
+
+.toc-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.toc-card > ul > li {
+    margin-bottom: 0.75rem;
+}
+
+.toc-card ul ul {
+    margin-top: 0.5rem;
+    margin-left: 1.5rem;
+}
+
+.toc-card ul ul li {
+    margin-bottom: 0.5rem;
+}
+
+.toc-card a {
+    color: #aaa;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: inline-block;
+}
+
+.toc-card a:hover {
+    color: #00ff88;
+}
+
+/* Main Documentation Content */
+.doc-content {
+    padding: 4rem 0;
+}
+
+.doc-section {
+    margin-bottom: 5rem;
+}
+
+.doc-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: #fff;
+    border-bottom: 2px solid rgba(0, 255, 136, 0.3);
+    padding-bottom: 0.5rem;
+}
+
+.section-intro {
+    font-size: 1.1rem;
+    color: #aaa;
+    margin-bottom: 2rem;
+    line-height: 1.8;
+}
+
+.doc-subsection {
+    margin-top: 3rem;
+}
+
+.doc-subsection h3 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #00ff88;
+}
+
+.doc-subsection h4 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+/* Info Boxes */
+.info-box,
+.warning-box,
+.tip-box {
+    display: flex;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+.info-box {
+    background: rgba(0, 136, 255, 0.1);
+    border-left: 4px solid #0088ff;
+}
+
+.warning-box {
+    background: rgba(255, 136, 0, 0.1);
+    border-left: 4px solid #ff8800;
+}
+
+.tip-box {
+    background: rgba(0, 255, 136, 0.1);
+    border-left: 4px solid #00ff88;
+}
+
+.info-box.small,
+.warning-box.small {
+    padding: 1rem;
+    font-size: 0.9rem;
+}
+
+.info-box svg,
+.warning-box svg,
+.tip-box svg {
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+}
+
+.info-box p,
+.warning-box p,
+.tip-box p {
+    margin: 0;
+    color: #ddd;
+    line-height: 1.6;
+}
+
+.warning-box ul,
+.tip-box ul {
+    margin: 0.5rem 0 0 1.5rem;
+    color: #ddd;
+}
+
+.warning-box li,
+.tip-box li {
+    margin-bottom: 0.25rem;
+}
+
+/* Installation Steps */
+.installation-steps {
+    margin: 2rem 0;
+}
+
+.installation-steps h4 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.installation-steps ol {
+    counter-reset: step-counter;
+    list-style: none;
+    padding: 0;
+}
+
+.installation-steps li {
+    counter-increment: step-counter;
+    margin-bottom: 2rem;
+    padding-left: 3rem;
+    position: relative;
+}
+
+.installation-steps li::before {
+    content: counter(step-counter);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2rem;
+    height: 2rem;
+    background: linear-gradient(135deg, #00ff88, #0088ff);
+    color: #0a0a0f;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.installation-steps strong {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+.installation-steps p {
+    color: #aaa;
+    line-height: 1.6;
+}
+
+/* Figure Container */
+.figure-container {
+    margin: 3rem 0;
+}
+
+.figure-placeholder {
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.figure-caption {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #888;
+    font-style: italic;
+}
+
+/* Connection Guide */
+.connection-guide {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.connection-item {
+    display: flex;
+    gap: 1.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+}
+
+.connection-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(0, 255, 136, 0.3);
+    transform: translateX(5px);
+}
+
+.connection-number {
+    flex-shrink: 0;
+    width: 3rem;
+    height: 3rem;
+    background: linear-gradient(135deg, #00ff88, #0088ff);
+    color: #0a0a0f;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.connection-content h4 {
+    margin-bottom: 0.75rem;
+    color: #fff;
+}
+
+.connection-content p {
+    color: #aaa;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.port-info {
+    display: flex;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+}
+
+.port-label {
+    color: #888;
+}
+
+.port-value {
+    color: #00ff88;
+}
+
+/* Indicators Table */
+.indicators-table {
+    overflow-x: auto;
+    margin: 2rem 0;
+}
+
+.indicators-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.indicators-table thead {
+    background: rgba(0, 255, 136, 0.1);
+}
+
+.indicators-table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #00ff88;
+    border-bottom: 2px solid rgba(0, 255, 136, 0.3);
+}
+
+.indicators-table td {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: #ddd;
+}
+
+.indicators-table tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* LED Indicators */
+.led-indicator {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.led-indicator.green {
+    background: #00ff88;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+.led-indicator.red {
+    background: #ff4444;
+    box-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+}
+
+.led-indicator.yellow {
+    background: #ffd700;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.led-indicator.off {
+    background: #333;
+    border: 1px solid #555;
+}
+
+.led-indicator.blink {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* Specifications Grid */
+.specs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.spec-category {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 2rem;
+}
+
+.spec-category h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #00ff88;
+    border-bottom: 2px solid rgba(0, 255, 136, 0.2);
+    padding-bottom: 0.5rem;
+}
+
+.spec-category dl {
+    display: grid;
+    gap: 1rem;
+}
+
+.spec-category dt {
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 0.25rem;
+}
+
+.spec-category dd {
+    color: #aaa;
+    margin-left: 0;
+    padding-left: 1rem;
+    border-left: 2px solid rgba(0, 136, 255, 0.3);
+}
+
+/* FAQ List */
+.faq-list {
+    margin: 2rem 0;
+}
+
+.faq-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+    border-color: rgba(0, 255, 136, 0.3);
+}
+
+.faq-item summary {
+    padding: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    user-select: none;
+}
+
+.faq-item summary::-webkit-details-marker {
+    display: none;
+}
+
+.faq-item summary h4 {
+    margin: 0;
+    color: #fff;
+    font-size: 1.1rem;
+}
+
+.faq-item summary svg {
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+    color: #00ff88;
+}
+
+.faq-item[open] summary svg {
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    padding: 0 1.5rem 1.5rem;
+    color: #aaa;
+    line-height: 1.8;
+}
+
+.faq-answer p {
+    margin-bottom: 1rem;
+}
+
+.faq-answer ol {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.faq-answer li {
+    margin-bottom: 0.5rem;
+}
+
+.faq-answer strong {
+    color: #fff;
+}
+
+/* Accessibility Content */
+.accessibility-content {
+    max-width: 900px;
+}
+
+.accessibility-content h3 {
+    font-size: 1.75rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    color: #00ff88;
+}
+
+.accessibility-content ul {
+    margin: 1rem 0 2rem;
+    padding-left: 1.5rem;
+    color: #aaa;
+    line-height: 1.8;
+}
+
+.accessibility-content li {
+    margin-bottom: 0.75rem;
+}
+
+.accessibility-content strong {
+    color: #fff;
+}
+
+.accessibility-content a {
+    color: #0088ff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.accessibility-content a:hover {
+    color: #00ff88;
+}
+
+/* Document Footer Section */
+.doc-footer-section {
+    padding: 4rem 0;
+    background: rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.doc-footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.doc-footer-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 2rem;
+}
+
+.doc-footer-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.doc-footer-card p {
+    color: #aaa;
+    margin-bottom: 1.5rem;
+}
+
+.doc-footer-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.doc-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: rgba(0, 255, 136, 0.1);
+    border: 1px solid rgba(0, 255, 136, 0.3);
+    border-radius: 8px;
+    color: #00ff88;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.doc-btn:hover {
+    background: rgba(0, 255, 136, 0.2);
+    border-color: #00ff88;
+    transform: translateY(-2px);
+}
+
+.doc-btn.secondary {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #aaa;
+}
+
+.doc-btn.secondary:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+}
+
+.doc-btn svg {
+    flex-shrink: 0;
+}
+
+.doc-btn:disabled,
+.doc-btn[disabled] {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #666;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.doc-btn:disabled:hover,
+.doc-btn[disabled]:hover {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: none;
+}
+
+/* App Grid */
+.app-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.app-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #aaa;
+    text-decoration: none;
+    text-align: center;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+}
+
+.app-link:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(0, 255, 136, 0.3);
+    color: #00ff88;
+    transform: translateY(-2px);
+}
+
+.app-link svg {
+    color: #0088ff;
+}
+
+/* Footer Legal Links */
+.footer-legal {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.footer-legal a,
+.footer-legal button {
+    color: #888;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-size: inherit;
+}
+
+.footer-legal a:hover,
+.footer-legal button:hover {
+    color: #00ff88;
+}
+
+.footer-links-inline {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.footer-links-inline a {
+    color: #888;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links-inline a:hover {
+    color: #00ff88;
+}
+
+/* Back to Top Button */
+.back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 3rem;
+    height: 3rem;
+    background: linear-gradient(135deg, #00ff88, #0088ff);
+    border: none;
+    border-radius: 50%;
+    color: #0a0a0f;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .doc-title {
+        font-size: 2rem;
+    }
+
+    .doc-subtitle {
+        font-size: 1rem;
+    }
+
+    .doc-section h2 {
+        font-size: 2rem;
+    }
+
+    .doc-subsection h3 {
+        font-size: 1.5rem;
+    }
+
+    .installation-steps li {
+        padding-left: 2.5rem;
+    }
+
+    .connection-item {
+        flex-direction: column;
+    }
+
+    .indicators-table {
+        font-size: 0.85rem;
+    }
+
+    .indicators-table th,
+    .indicators-table td {
+        padding: 0.75rem 0.5rem;
+    }
+
+    .specs-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .doc-footer-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .back-to-top {
+        bottom: 1rem;
+        right: 1rem;
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .doc-header {
+        padding: 6rem 0 3rem;
+    }
+
+    .doc-title {
+        font-size: 1.75rem;
+    }
+
+    .doc-meta {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .toc-card {
+        padding: 1.5rem;
+    }
+
+    .doc-section h2 {
+        font-size: 1.75rem;
+    }
+
+    .installation-steps li::before {
+        width: 1.75rem;
+        height: 1.75rem;
+        font-size: 0.8rem;
+    }
+}
