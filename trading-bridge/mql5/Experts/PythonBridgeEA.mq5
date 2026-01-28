@@ -144,6 +144,15 @@ void ExecuteBuy(string symbol, double lotSize, double stopLoss, double takeProfi
    double sl = stopLoss > 0 ? NormalizeDouble(stopLoss, _Digits) : 0;
    double tp = takeProfit > 0 ? NormalizeDouble(takeProfit, _Digits) : 0;
    
+   // Auto-calculate TP if SL is present but TP is missing
+   if (tp == 0 && sl > 0)
+   {
+      double slDist = MathAbs(price - sl);
+      double tpPrice = price + (slDist * 2.5); // Default R:R 2.5
+      tp = NormalizeDouble(tpPrice, _Digits);
+      Print("INFO: Calculated TP for BUY: ", tp, " based on SL: ", sl, " (R:R 2.5)");
+   }
+
    if (trade.Buy(lotSize, symbol, price, sl, tp, comment))
    {
       Print("BUY order executed: ", symbol, " Lot: ", lotSize, " SL: ", sl, " TP: ", tp);
@@ -175,6 +184,15 @@ void ExecuteSell(string symbol, double lotSize, double stopLoss, double takeProf
    double sl = stopLoss > 0 ? NormalizeDouble(stopLoss, _Digits) : 0;
    double tp = takeProfit > 0 ? NormalizeDouble(takeProfit, _Digits) : 0;
    
+   // Auto-calculate TP if SL is present but TP is missing
+   if (tp == 0 && sl > 0)
+   {
+      double slDist = MathAbs(price - sl);
+      double tpPrice = price - (slDist * 2.5); // Default R:R 2.5
+      tp = NormalizeDouble(tpPrice, _Digits);
+      Print("INFO: Calculated TP for SELL: ", tp, " based on SL: ", sl, " (R:R 2.5)");
+   }
+
    if (trade.Sell(lotSize, symbol, price, sl, tp, comment))
    {
       Print("SELL order executed: ", symbol, " Lot: ", lotSize, " SL: ", sl, " TP: ", tp);
