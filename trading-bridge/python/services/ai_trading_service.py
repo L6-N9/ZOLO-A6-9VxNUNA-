@@ -57,11 +57,13 @@ try:
     from ai.strategy_engine import AIStrategyEngine
     from ai.strategies.ml_strategy import MLStrategy
     from ai.strategies.technical_strategy import TechnicalStrategy
+    from ai.strategies.scalping_strategy import ScalpingStrategy
 except ImportError as e:
     logger.warning(f"AI components import error: {e}")
     AIStrategyEngine = None
     MLStrategy = None
     TechnicalStrategy = None
+    ScalpingStrategy = None
 
 
 class AITradingService:
@@ -170,6 +172,12 @@ class AITradingService:
                 self.strategies.append(tech_strategy)
                 logger.info("Technical Strategy initialized")
             
+            # Scalping Strategy
+            if ScalpingStrategy:
+                scalping_strategy = ScalpingStrategy(config=self.config.get('scalping_strategy', {}))
+                self.strategies.append(scalping_strategy)
+                logger.info("Scalping Strategy initialized")
+
             logger.info(f"Initialized {len(self.strategies)} strategy(ies)")
             
         except Exception as e:
@@ -242,35 +250,41 @@ class AITradingService:
         if not self.ai_engine:
             return
         
+        # Define timeframes to analyze (Scalping + Standard)
+        timeframes = ["5m", "15m", "30m", "1h"]
+
         for symbol in self.symbols:
-            try:
-                # Analyze market
-                logger.debug(f"Analyzing {symbol}...")
-                market_analysis = self.ai_engine.analyze_market(symbol, timeframe="H1")
-                
-                if 'error' in market_analysis:
-                    logger.warning(f"Market analysis error for {symbol}: {market_analysis['error']}")
-                    continue
-                
-                # Generate signal using strategies
-                best_signal = None
-                best_confidence = 0.0
-                
-                for strategy in self.strategies:
-                    try:
-                        signal = strategy.generate_signal(symbol, market_analysis)
-                        if signal and signal.get('confidence', 0.0) > best_confidence:
-                            best_signal = signal
-                            best_confidence = signal.get('confidence', 0.0)
-                    except Exception as e:
-                        logger.error(f"Error in strategy {strategy.name}: {e}")
-                
-                # If we have a good signal, assess risk and execute
-                if best_signal and best_confidence >= self.config.get('min_confidence', 0.6):
-                    self._process_signal(symbol, best_signal, market_analysis)
-                
-            except Exception as e:
-                logger.error(f"Error analyzing {symbol}: {e}")
+            for timeframe in timeframes:
+                try:
+                    # Analyze market
+                    logger.debug(f"Analyzing {symbol} ({timeframe})...")
+                    market_analysis = self.ai_engine.analyze_market(symbol, timeframe=timeframe)
+
+                    if 'error' in market_analysis:
+                        # Log warning only if it's not just "No market data" to avoid noise
+                        if "No market data" not in market_analysis.get('error', ''):
+                            logger.warning(f"Market analysis error for {symbol} {timeframe}: {market_analysis['error']}")
+                        continue
+
+                    # Generate signal using strategies
+                    best_signal = None
+                    best_confidence = 0.0
+
+                    for strategy in self.strategies:
+                        try:
+                            signal = strategy.generate_signal(symbol, market_analysis)
+                            if signal and signal.get('confidence', 0.0) > best_confidence:
+                                best_signal = signal
+                                best_confidence = signal.get('confidence', 0.0)
+                        except Exception as e:
+                            logger.error(f"Error in strategy {strategy.name}: {e}")
+
+                    # If we have a good signal, assess risk and execute
+                    if best_signal and best_confidence >= self.config.get('min_confidence', 0.6):
+                        self._process_signal(symbol, best_signal, market_analysis)
+
+                except Exception as e:
+                    logger.error(f"Error analyzing {symbol} {timeframe}: {e}")
     
     def _process_signal(self, symbol: str, signal: Dict, market_analysis: Dict):
         """Process trading signal"""
