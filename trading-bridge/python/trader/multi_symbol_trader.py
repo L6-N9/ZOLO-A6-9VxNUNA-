@@ -7,9 +7,9 @@ from typing import Dict, List, Set, Optional
 from pathlib import Path
 from datetime import datetime
 
-from ..bridge.signal_manager import TradeSignal
-from ..brokers.base_broker import BaseBroker, OrderResult
-from ..brokers.broker_factory import BrokerFactory
+from bridge.signal_manager import TradeSignal
+from brokers.base_broker import BaseBroker, OrderResult
+from brokers.broker_factory import BrokerFactory
 
 
 class MultiSymbolTrader:

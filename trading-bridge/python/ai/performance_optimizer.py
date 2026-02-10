@@ -27,7 +27,7 @@ class PerformanceOptimizer:
         self.config = config or {}
         self.performance_history = []
         self.optimization_results = {}
-        self.data_dir = Path(__file__).parent.parent.parent.parent / "data" / "performance"
+        self.data_dir = Path(__file__).parent.parent.parent / "data" / "performance"
         self.data_dir.mkdir(parents=True, exist_ok=True)
     
     def track_performance(self, trade_result: Dict):

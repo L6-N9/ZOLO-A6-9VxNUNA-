@@ -37,7 +37,7 @@ except ImportError as e:
     # functionality
     logging.basicConfig(level=logging.ERROR)
     logger = logging.getLogger(__name__)
-    logger.error(f"Import error: {e}")
+    import traceback; logger.error(f"Import error: {e}"); logger.error(traceback.format_exc())
     logger.error(f"Python path: {sys.path}")
     logger.error(f"Current directory: {os.getcwd()}")
     logger.error(f"Python dir: {python_dir}")
@@ -54,7 +54,7 @@ finally:
         pass
 
 # Setup logging
-log_dir = Path(__file__).parent.parent.parent.parent / "logs"
+log_dir = Path(__file__).parent.parent.parent / "logs"
 log_dir.mkdir(parents=True, exist_ok=True)
 log_file = log_dir / f"trading_service_{datetime.now().strftime('%Y%m%d')}.log"
 
