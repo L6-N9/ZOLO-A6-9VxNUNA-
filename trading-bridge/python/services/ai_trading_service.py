@@ -25,7 +25,7 @@ if os.getcwd() not in sys.path:
     sys.path.insert(0, os.getcwd())
 
 # Setup logging
-log_dir = Path(__file__).parent.parent.parent.parent / "logs"
+log_dir = Path(__file__).parent.parent.parent / "logs"
 log_dir.mkdir(parents=True, exist_ok=True)
 log_file = log_dir / f"ai_trading_service_{datetime.now().strftime('%Y%m%d')}.log"
 

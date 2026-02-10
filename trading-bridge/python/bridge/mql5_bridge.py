@@ -28,7 +28,7 @@ except (ImportError, ValueError):
 
 
 # Setup logging
-log_dir = Path(__file__).parent.parent.parent.parent / "logs"
+log_dir = Path(__file__).parent.parent.parent / "logs"
 log_dir.mkdir(parents=True, exist_ok=True)
 log_file = log_dir / f"mql5_bridge_{datetime.now().strftime('%Y%m%d')}.log"
 

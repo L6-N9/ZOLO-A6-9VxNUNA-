@@ -30,8 +30,8 @@ class MLStrategy(BaseStrategy):
     def _initialize_components(self):
         """Initialize ML components"""
         try:
-            from ..models.price_predictor import PricePredictor
-            from ..models.signal_classifier import SignalClassifier
+            from ai.models.price_predictor import PricePredictor
+            from ai.models.signal_classifier import SignalClassifier
             
             self.price_predictor = PricePredictor()
             self.signal_classifier = SignalClassifier()
